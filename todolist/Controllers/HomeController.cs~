@@ -1,0 +1,40 @@
+using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using todolist.Data;
+using todolist.Models;
+
+namespace todolist.Controllers;
+
+public class HomeController : Controller
+{
+    private readonly ILogger<HomeController> _logger;
+    private readonly ApplicationDbContext _context;
+
+    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+    {
+        _context = context;
+        _logger = logger;
+    }
+
+    public IActionResult Index()
+    {
+        var tasks = new List<TaskItem>
+        {
+            new TaskItem { Id = 1, Title = "Купить продукты", IsCompleted = false },
+            new TaskItem { Id = 2, Title = "Позвонить другу", IsCompleted = true },
+            new TaskItem { Id = 3, Title = "Сделать домашнее задание", IsCompleted = false }
+        };
+        return View();
+    }
+
+    public IActionResult Privacy()
+    {
+        return View();
+    }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+}
