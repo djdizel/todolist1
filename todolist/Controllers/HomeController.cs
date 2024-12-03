@@ -19,8 +19,22 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         var tasks = _context.TaskItems.ToList();
-        _logger.LogInformation("Number of tasks retrieved: {Count}", tasks.Count);
-        return View();
+
+        // Проверка, если список пустой или null
+        if (tasks == null || !tasks.Any())
+        {
+            Console.WriteLine("TaskItems is null or empty.");
+        }
+        else
+        {
+            foreach (var task in tasks)
+            {
+                Console.WriteLine($"Task: {task.Title}, Completed: {task.IsCompleted}");
+            }
+        }
+
+        // Передаем данные в представление
+        return View(tasks);
     }
 
     public IActionResult Privacy()

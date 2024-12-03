@@ -176,3 +176,4 @@ D:\repos\todolist1\todolist1\todolist\obj\Debug\net8.0\ref\todolist.dll
 D:\repos\todolist1\todolist1\todolist\bin\Debug\net8.0\todolist.staticwebassets.endpoints.json
 D:\repos\todolist1\todolist1\todolist\obj\Debug\net8.0\staticwebassets.build.endpoints.json
 D:\repos\todolist1\todolist1\todolist\obj\Debug\net8.0\staticwebassets\msbuild.todolist.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+D:\repos\todolist1\todolist1\todolist\obj\Debug\net8.0\todolist.sourcelink.json
