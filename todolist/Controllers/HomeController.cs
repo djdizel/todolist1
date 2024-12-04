@@ -47,4 +47,38 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+    [HttpPost]
+    public IActionResult Create(string Title)
+    {
+        if (!string.IsNullOrEmpty(Title))
+        {
+            // Создаем новую задачу
+            var task = new TaskItem
+            {
+                Title = Title,
+                IsCompleted = false,
+                Status = "Pending"
+            };
+
+            // Сохраняем задачу в базу данных
+            _context.TaskItems.Add(task);
+            _context.SaveChanges();
+        }
+
+        // Перенаправляем на метод Index для обновления списка задач
+        return RedirectToAction("Index");
+    }
+    [HttpPost]
+    public IActionResult DeleteTask(int id)
+    {
+        var task = _context.TaskItems.FirstOrDefault(t => t.Id == id);
+        if (task != null)
+        {
+            _context.TaskItems.Remove(task);
+            _context.SaveChanges();
+        }
+
+        return RedirectToAction("Index");
+    }
+
 }

@@ -22,13 +22,18 @@
         @foreach (var task in Model)
         {
             <tr>
+                <!-- Отображение названия задачи -->
                 <td>@task.Title</td>
+
+                <!-- Управление статусом задачи -->
                 <td>
-                    <form asp-action="Delete" method="post">
+                    <form asp-action="ToggleStatus" method="post">
                         <input type="hidden" name="id" value="@task.Id" />
                         <input type="checkbox" @if (task.IsCompleted) { <text>checked</text> } onclick="this.form.submit()" />
                     </form>
                 </td>
+
+                <!-- Кнопка для удаления задачи -->
                 <td>
                     <form asp-action="Delete" method="post">
                         <input type="hidden" name="id" value="@task.Id" />
@@ -41,7 +46,7 @@
     </table>
 
     <h3>Добавить новую задачу</h3>
-    <form asp-action="Create" method="post">
+    <form asp-controller="Home" asp-action="Create" method="post">
         <div class="form-group">
             <label for="Title">Название задачи</label>
             <input type="text" name="Title" class="form-control" placeholder="Введите название задачи" required />
