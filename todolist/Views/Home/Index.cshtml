@@ -27,9 +27,8 @@
 
                 <!-- Управление статусом задачи -->
                 <td>
-                    <form asp-action="ToggleStatus" method="post">
-                        <input type="hidden" name="id" value="@task.Id" />
-                        <input type="checkbox" @if (task.IsCompleted) { <text>checked</text> } onclick="this.form.submit()" />
+                    <form id="toggle-status-form-@task.Id" data-task-id="@task.Id">
+                        <input type="checkbox" @if (task.IsCompleted) { <text>checked</text> } onchange="toggleStatus(@task.Id, this.checked)" />
                     </form>
                 </td>
 
@@ -56,3 +55,25 @@
 </div>
 </body>
 </html>
+<script>
+    async function toggleStatus(taskId, isCompleted) {
+        try {
+            const response = await fetch('/Home/ToggleStatus', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: taskId, isCompleted: isCompleted })
+            });
+
+            if (!response.ok) {
+                throw new Error('Ошибка при обновлении статуса задачи');
+            }
+
+            console.log('Статус задачи обновлён успешно');
+        } catch (error) {
+            console.error(error);
+            alert('Не удалось обновить статус задачи');
+        }
+    }
+</script>

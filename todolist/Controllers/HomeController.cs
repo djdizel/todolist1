@@ -69,7 +69,7 @@ public class HomeController : Controller
         return RedirectToAction("Index");
     }
     [HttpPost]
-    public IActionResult DeleteTask(int id)
+    public IActionResult Delete(int id)
     {
         var task = _context.TaskItems.FirstOrDefault(t => t.Id == id);
         if (task != null)
@@ -80,5 +80,23 @@ public class HomeController : Controller
 
         return RedirectToAction("Index");
     }
+    [HttpPost]
+    public IActionResult ToggleStatus([FromBody] ToggleStatusModel model)
+    {
+        var task = _context.TaskItems.FirstOrDefault(t => t.Id == model.Id);
+        if (task != null)
+        {
+            task.IsCompleted = model.IsCompleted;
+            _context.SaveChanges();
+            return Json(new { success = true });
+        }
+        return Json(new { success = false, message = "Задача не найдена" });
+    }
 
+    public class ToggleStatusModel
+    {
+        public int Id { get; set; }
+        public bool IsCompleted { get; set; }
+    }
 }
+
